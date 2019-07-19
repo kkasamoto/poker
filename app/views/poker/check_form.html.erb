@@ -1,0 +1,15 @@
+<h1>Check a Poker Hand</h1>
+<%= form_tag("/check", {method: "post"}) do %>
+  <div class="form">
+    <input type="text" name="card">
+    <button type="submit">Check</button>
+  </div>
+  <% if @error_msgs %>
+    <% @error_msgs.each do |msg| %>
+      <p class="error_msg"><%= msg %></p>
+    <% end %>
+  <% end %>
+  <% if @result %>
+    <p class="result"><%= @result %></p>
+  <% end %>
+<% end %>
