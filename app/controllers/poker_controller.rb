@@ -1,16 +1,19 @@
 class PokerController < ApplicationController
+  attr_accessor :count
+
   def check_form
   end
 
   def check
-    @card = params[:card]
+    session[:card] = params[:card]
     service = Service.new
-    result = service.hand_name(card_str: @card)
+    result = service.hand_name(card_str: params[:card])
     if result[:has_error]
-      @err_messages = result[:err_messages]
+      flash[:err_messages] = result[:err_messages]
+      session[:hand_name] = nil
     else
-      @hand_name = result[:hand_name]
+      session[:hand_name] = result[:hand_name]
     end
-    render("poker/check_form")
+    redirect_to("/")
   end
 end

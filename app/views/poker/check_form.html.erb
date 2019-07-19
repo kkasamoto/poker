@@ -1,15 +1,15 @@
 <h1>Check a Poker Hand</h1>
 <%= form_tag("/check", {method: "post"}) do %>
   <div class="form">
-    <input type="text" name="card" placeholder="S10 H11 D12 C13 H1" value="<%= @card %>">
+    <input type="text" name="card" placeholder="S10 H11 D12 C13 H1" value="<%= session[:card] %>">
     <button type="submit">Check</button>
   </div>
-  <% if @err_messages %>
-    <% @err_messages  .each do |msg| %>
+  <% if flash[:err_messages] %>
+    <% flash[:err_messages].each do |msg| %>
       <p class="err_msg"><%= msg %></p>
     <% end %>
+  <% else %>
+    <p class="result"><%= session[:hand_name] %></p>
   <% end %>
-  <% if @hand_name %>
-    <p class="result"><%= @hand_name %></p>
-  <% end %>
+  <%= @count %>
 <% end %>
