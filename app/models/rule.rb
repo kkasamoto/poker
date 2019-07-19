@@ -48,7 +48,6 @@ class StraightFlush
       end
       now_n += 1
     end
-
     true
   end
 end
@@ -96,7 +95,6 @@ class FullHouse
         count += 2
       end
     end
-
     count == 3
   end
 end
@@ -137,7 +135,6 @@ class Straight
       end
       now_n += 1
     end
-
     true
   end
 end
@@ -164,8 +161,7 @@ class ThreeCard
         count += 1
       end
     end
-
-    return count == 1
+    count == 1
   end
 end
 
@@ -177,7 +173,7 @@ class TwoPair
 
   def is_this_hand?(card:)
     count_num_h = (1..13).map { |num| [num, 0] }.to_h
-    nums = card.map { |i| card[1..3].to_i }
+    nums = card.map { |c| c[1..3].to_i }
     nums.each do |i|
       count_num_h[i] += 1
     end
@@ -188,7 +184,6 @@ class TwoPair
         count += 1
       end
     end
-
     count == 2
   end
 end
@@ -201,7 +196,7 @@ class OnePair
 
   def is_this_hand?(card:)
     count_num_h = (1..13).map { |num| [num, 0] }.to_h
-    nums = card.map { |i| card[1..3].to_i }
+    nums = card.map { |c| c[1..3].to_i }
     nums.each do |i|
       count_num_h[i] += 1
     end
@@ -212,7 +207,6 @@ class OnePair
         count += 1
       end
     end
-
     count == 1
   end
 end
@@ -224,10 +218,9 @@ class HighCard
   end
 
   def is_this_hand?(card:)
-    if card.uniq == 5
+    if card.uniq.length == 5
       return true
     end
-
     false
   end
 end
