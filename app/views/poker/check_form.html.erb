@@ -1,15 +1,26 @@
-<h1>Check a Poker Hand</h1>
-<%= form_tag("/check", {method: "post"}) do %>
-  <div class="form">
-    <input type="text" name="card" placeholder="S10 H11 D12 C13 H1" value="<%= session[:card] %>">
-    <button type="submit">Check</button>
-  </div>
-  <% if flash[:err_messages] %>
-    <% flash[:err_messages].each do |msg| %>
-      <p class="err_msg"><%= msg %></p>
+<header class="container-fluid py-3 bg-dark">
+  <h1 class="text-center text-white">Check a Poker Hand</h1>
+</header>
+<main class="container-fluid">
+  <div class="mx-auto mt-4 px-5 py-5 border border-dark" style="width: 500px;">
+  <%= form_tag("/check", {method: "post"}) do %>
+    <div class="form-group">
+      <input class="form-control text-center" type="text" name="card" placeholder="S10 H11 D12 C13 H1" value="<%= session[:card] %>">
+    </div>
+    <button type="submit" class="btn btn-light mx-auto d-block">Check</button>
+    <div class="mt-5">
+    <% if flash[:err_messages] %>
+        <div class="py-3 px-3" style="background-color: rgba(255, 0, 0, 0.5); font-size: 14px;">
+          <% flash[:err_messages].each do |msg| %>
+            <p><%= msg %></p>
+          <% end %>
+        </div>
+    <% else %>
+      <p class="text-center h3"><%= session[:hand_name] %></p>
     <% end %>
-  <% else %>
-    <p class="result"><%= session[:hand_name] %></p>
+    <%= @count %>
+    </div>
   <% end %>
-  <%= @count %>
-<% end %>
+  </div>
+</main>
+
