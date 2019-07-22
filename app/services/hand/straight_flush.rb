@@ -19,8 +19,9 @@ class StraightFlush
     end
 
     # 連番か
+    # 1, 10, 11, 12, 13の場合は速攻true
     if sorted_nums == [1, 10, 11, 12, 13]
-      return false
+      return true
     end
     now_n = sorted_nums[0]
     for i in sorted_nums do
