@@ -10,9 +10,6 @@ class HighCard
   end
 
   def self.is_this_hand?(card:)
-    if card.uniq.length == 5
-      return true
-    end
-    false
+    true
   end
 end
