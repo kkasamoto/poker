@@ -3,8 +3,8 @@ class Service
     card = card_str.strip.split
     validator = CardValidator.new
     if validator.valid?(card)
-      rule = Rule.new
-      {hand_name: rule.hand(card: card).hand_name, err_messages: [], has_error: false}
+      hand = HandBuilder.new.build(card: card)
+      {hand_name: hand.name, err_messages: [], has_error: false}
     else
       {hand_name: '', err_messages: validator.err_messages, has_error: true}
     end
