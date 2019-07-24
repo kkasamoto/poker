@@ -2,9 +2,9 @@ class PokerFacadeService
   def hand_name(card_str:)
     card = card_str.strip.split
     validator = CardValidator.new
+    hand_judge = HandJudge.new(card)
     if validator.valid?(card)
-      hand = HandBuilder.new.build(card: card)
-      {hand_name: hand.name, err_messages: [], has_error: false}
+      {hand_name: hand_judge.judge_name, err_messages: [], has_error: false}
     else
       {hand_name: '', err_messages: validator.err_messages, has_error: true}
     end
