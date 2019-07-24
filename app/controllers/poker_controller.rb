@@ -5,7 +5,7 @@ class PokerController < ApplicationController
   def check
     session[:card] = params[:card]
     service = PokerFacadeService.new
-    result = service.hand_name(card_str: params[:card])
+    result = service.hand_name(params[:card])
     if result[:has_error]
       flash.now[:err_messages] = result[:err_messages]
       session[:hand_name] = nil

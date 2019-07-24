@@ -1,5 +1,5 @@
 class PokerFacadeService
-  def hand_name(card_str:)
+  def hand_name(card_str)
     card = card_str.strip.split
     hand_judge = HandJudge.new(card)
     if hand_judge.valid?
