@@ -1,6 +1,4 @@
 class PokerController < ApplicationController
-  attr_accessor :count
-
   def top
   end
 
