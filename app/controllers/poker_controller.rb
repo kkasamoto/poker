@@ -1,7 +1,7 @@
 class PokerController < ApplicationController
   attr_accessor :count
 
-  def check_form
+  def top
   end
 
   def check
