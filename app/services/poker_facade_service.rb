@@ -1,4 +1,4 @@
-class PokerService
+class PokerFacadeService
   def hand_name(card_str:)
     card = card_str.strip.split
     validator = CardValidator.new
