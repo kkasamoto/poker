@@ -274,5 +274,25 @@ describe HandJudge do
     end
   end
 
-  describe "#judge_strength"
+  describe "#judge_strength" do
+    describe "正しい強さ（数値）を返すかどうか" do
+      it "ストレートフラッシュ == 80" do
+        card = ["S9", "S8", "S6", "S10", "S7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_strength).to eq 80
+      end
+
+      it "ストレート == 40" do
+        card = ["D9", "S8", "S6", "S10", "S7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_strength).to eq 40
+      end
+
+      it "ハイカード == 0" do
+        card = ["D1", "S2", "H6", "S10", "S7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_strength).to eq 0
+      end
+    end
+  end
 end
