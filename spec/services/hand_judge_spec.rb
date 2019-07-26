@@ -3,6 +3,32 @@ require 'spec_helper'
 
 
 describe HandJudge do
+  describe "self.from_str" do
+    it "空白区切りによる文字列で表現されたカードを正しく5つに分けているか" do
+      card_str = "S1 S2 S3 S4 S5"
+      instance = HandJudge.from_str(card_str)
+      expect(instance.card).to eq ["S1", "S2", "S3", "S4", "S5"]
+    end
+
+    it "端っこに空白がある場合、カードを正しく5つに分けているか" do
+      card_str = "  S1 S2 S3 S4 S5 "
+      instance = HandJudge.from_str(card_str)
+      expect(instance.card).to eq ["S1", "S2", "S3", "S4", "S5"]
+    end
+
+    it "空白2つで区切られていた場合、カードを正しく5つに分けているか" do
+      card_str = "S1  S2 S3  S4 S5"
+      instance = HandJudge.from_str(card_str)
+      expect(instance.card).to eq ["S1", "S2", "S3", "S4", "S5"]
+    end
+
+    it "全角の空白の場合、正しく分けれない" do
+      card_str = "S1　S2 S3 S4 S5"
+      instance = HandJudge.from_str(card_str)
+      expect(instance.card).to eq ["S1　S2", "S3", "S4", "S5"]
+    end
+  end
+
   describe "#valid?" do
     # 検証観点
     # 1. 要素は5つあるか？

@@ -26,6 +26,11 @@ class HandJudge
     }
   end
 
+  def self.from_str(card_str)
+    card = card_str.strip.split
+    return self.new(card)
+  end
+
   def initialize(card)
     @card = card
     @err_messages = []
