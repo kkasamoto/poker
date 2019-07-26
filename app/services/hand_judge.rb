@@ -63,9 +63,9 @@ class HandJudge
 
   # 役の強さを返す
   def judge_strength
-    Hands::STRENGTH.each do |h, p|
-      if h == judge_name
-        p
+    Hands::STRENGTH.each do |k, v|
+      if k == judge_name
+        return v
       end
     end
   end
