@@ -203,4 +203,76 @@ describe HandJudge do
       end
     end
   end
+
+  describe "#judge_name" do
+    describe "正しい役判定をするかどうか" do
+      it "ストレートフラッシュ(1, 10, 11, 12, 13)" do
+        card = ["S10", "S1", "S11", "S13", "S12"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "ストレートフラッシュ"
+      end
+
+      it "ストレートフラッシュ(普通)" do
+        card = ["S9", "S8", "S6", "S10", "S7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "ストレートフラッシュ"
+      end
+
+      it "フォーカード" do
+        card = ["S9", "C7", "H7", "S7", "D7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "フォーカード"
+      end
+
+      it "フルハウス" do
+        card = ["S9", "C7", "H9", "S7", "D7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "フルハウス"
+      end
+
+      it "フラッシュ" do
+        card = ["S9", "S7", "S11", "S1", "S2"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "フラッシュ"
+      end
+
+      it "ストレート(1, 10, 11, 12, 13)" do
+        card = ["D10", "S1", "S11", "S13", "S12"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "ストレート"
+      end
+
+      it "ストレート(普通)" do
+        card = ["D9", "S8", "S6", "S10", "S7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "ストレート"
+      end
+
+      it "スリーカード" do
+        card = ["D9", "S9", "H9", "S10", "S7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "スリーカード"
+      end
+
+      it "2ペア" do
+        card = ["D9", "S9", "H10", "S10", "S7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "2ペア"
+      end
+
+      it "1ペア" do
+        card = ["D9", "S9", "H6", "S10", "S7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "1ペア"
+      end
+
+      it "ハイカード" do
+        card = ["D1", "S2", "H6", "S10", "S7"]
+        instance = HandJudge.new(card)
+        expect(instance.judge_name).to eq "ハイカード"
+      end
+    end
+  end
+
+  describe "#judge_strength"
 end
