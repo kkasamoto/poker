@@ -5,8 +5,7 @@ module Resources
         desc "check which card is winner"
         post :check do
           service = PokerFacadeService.new
-          #service.check_strong_card(params[:cards])
-          present service.check_strong_card(params[:cards]), with: Entities::V1::CardsEntity
+          service.check_strong_card(params[:cards])
         end
       end
     end
