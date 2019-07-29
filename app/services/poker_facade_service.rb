@@ -22,6 +22,6 @@ class PokerFacadeService
       end
       card_hash.delete(:strength)
     end
-    result
+    {result: result}
   end
 end
