@@ -26,6 +26,11 @@ class HandJudge
     }
   end
 
+  def self.from_str(card_str)
+    card = card_str.strip.split
+    return self.new(card)
+  end
+
   def initialize(card)
     @card = card
     @err_messages = []
@@ -45,7 +50,7 @@ class HandJudge
     end
     #2.
     @card.each_with_index  do |c,idx|
-      if not c.match(/^[SHDC](\d|10|11|12|13)$/)
+      if not c.match(/^[SHDC]([1-9]|10|11|12|13)$/)
         @err_messages.append("#{idx+1}番目のカード指定文字が不正です。（#{c}）")
       end
     end
@@ -63,9 +68,9 @@ class HandJudge
 
   # 役の強さを返す
   def judge_strength
-    Hands::STRENGTH.each do |h, p|
-      if h == judge_name
-        p
+    Hands::STRENGTH.each do |k, v|
+      if k == judge_name
+        return v
       end
     end
   end
