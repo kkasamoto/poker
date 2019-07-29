@@ -5,7 +5,7 @@ module Resources
         desc "check which card is winner"
         post :check do
           service = PokerFacadeService.new
-          service.which_strong_card(params[:cards])
+          service.check_strong_card(params[:cards])
         end
       end
     end
