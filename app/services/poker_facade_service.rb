@@ -7,4 +7,21 @@ class PokerFacadeService
       {hand_name: '', err_messages: hand_judge.err_messages, has_error: true}
     end
   end
+
+  def which_strong_card(card_strs)
+    result = []
+    card_strs.each do |card_str|
+      judge = HandJudge.from_str(card_str)
+      result.push({card: card_str, hand: judge.judge_name, best: false, strength: judge.judge_strength})
+    end
+
+    max_strength = result.max {|a, b| a[:strength] <=> b[:strength]}[:strength]
+    result.each do |card_hash|
+      if card_hash[:strength] == max_strength
+        card_hash[:best] = true
+      end
+      card_hash.delete(:strength)
+    end
+    result
+  end
 end
