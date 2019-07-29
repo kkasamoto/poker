@@ -2,7 +2,7 @@ class HandJudge
   attr_reader :card
   attr_reader :err_messages
 
-  def self.from_str(card_str)
+  def self.new_from_str(card_str)
     card = card_str.strip.split
     return self.new(card)
   end
