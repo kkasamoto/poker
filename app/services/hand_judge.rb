@@ -2,30 +2,6 @@ class HandJudge
   attr_reader :card
   attr_reader :err_messages
 
-  module Hands
-    STRAIGHT_FLUSH="ストレートフラッシュ"
-    FOUR_OF_A_KIND="フォーカード"
-    FULL_HOUSE="フルハウス"
-    FLUSH="フラッシュ"
-    STRAIGHT="ストレート"
-    THREE_OF_A_KIND="スリーカード"
-    TWO_PAIR="2ペア"
-    ONE_PAIR="1ペア"
-    HIGH_CARD="ハイカード"
-
-    STRENGTH = {
-      Hands::STRAIGHT_FLUSH => 80,
-      Hands::FOUR_OF_A_KIND => 70,
-      Hands::FULL_HOUSE => 60,
-      Hands::FLUSH => 50,
-      Hands::STRAIGHT => 40,
-      Hands::THREE_OF_A_KIND => 30,
-      Hands::TWO_PAIR => 20,
-      Hands::ONE_PAIR => 10,
-      Hands::HIGH_CARD => 0
-    }
-  end
-
   def self.from_str(card_str)
     card = card_str.strip.split
     return self.new(card)
@@ -68,7 +44,7 @@ class HandJudge
 
   # 役の強さを返す
   def judge_strength
-    Hands::STRENGTH.each do |k, v|
+    HandsDefinition::Hands::STRENGTH.each do |k, v|
       if k == judge_name
         return v
       end
@@ -78,28 +54,28 @@ class HandJudge
   # 名前を返す
   def judge_name
     if same_suit? && sequence?
-      return Hands::STRAIGHT_FLUSH
+      return HandsDefinition::Hands::STRAIGHT_FLUSH
     end
     if same_suit?
-      return Hands::FLUSH
+      return HandsDefinition::Hands::FLUSH
     end
     if sequence?
-      return Hands::STRAIGHT
+      return HandsDefinition::Hands::STRAIGHT
     end
     num_pattern = group_by_num.sort_by {|i| i}
     case num_pattern
     when [1,4]
-      return Hands::FOUR_OF_A_KIND
+      return HandsDefinition::Hands::FOUR_OF_A_KIND
     when [2,3]
-      return Hands::FULL_HOUSE
+      return HandsDefinition::Hands::FULL_HOUSE
     when [1,1,3]
-      return Hands::THREE_OF_A_KIND
+      return HandsDefinition::Hands::THREE_OF_A_KIND
     when [1,2,2]
-      return Hands::TWO_PAIR
+      return HandsDefinition::Hands::TWO_PAIR
     when [1,1,1,2]
-      return Hands::ONE_PAIR
+      return HandsDefinition::Hands::ONE_PAIR
     else
-      return Hands::HIGH_CARD
+      return HandsDefinition::Hands::HIGH_CARD
     end
   end
 

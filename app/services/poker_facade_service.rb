@@ -15,6 +15,7 @@ class PokerFacadeService
       result.push({card: card_str, hand: judge.judge_name, best: false, strength: judge.judge_strength})
     end
 
+    # 最大の強さを調べて、該当するカードのbestキーにtrueを代入
     max_strength = result.max {|a, b| a[:strength] <=> b[:strength]}[:strength]
     result.each do |card_hash|
       if card_hash[:strength] == max_strength
