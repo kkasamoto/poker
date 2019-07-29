@@ -8,7 +8,7 @@ class PokerFacadeService
     end
   end
 
-  def which_strong_card(card_strs)
+  def check_strong_card(card_strs)
     result = []
     card_strs.each do |card_str|
       judge = HandJudge.from_str(card_str)
