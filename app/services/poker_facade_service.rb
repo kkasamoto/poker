@@ -10,9 +10,15 @@ class PokerFacadeService
 
   def check_strong_card(card_strs)
     result = []
+    error = []
+    # cardごとに検証して、成功ならresultに、失敗ならerrorに追加
     card_strs.each do |card_str|
       judge = HandJudge.new_from_str(card_str)
-      result.push({card: card_str, hand: judge.judge_name, best: false, strength: judge.judge_strength})
+      if judge.valid?
+        result.push({card: card_str, hand: judge.judge_name, best: false, strength: judge.judge_strength})
+      else
+        error.push({card:card_str, msg: judge.err_messages[0]})
+      end
     end
 
     # 最大の強さを調べて、該当するカードのbestキーにtrueを代入
@@ -23,6 +29,6 @@ class PokerFacadeService
       end
       card_hash.delete(:strength)
     end
-    {result: result}
+    {result: result, error: error}
   end
 end
