@@ -6,10 +6,11 @@ module Resources
       content_type :json, 'application/json'
 
       route :any, '*path' do
-        {error: [
-          msg: "不正なURLです。"
-                ]
-        }
+        {error: [msg: "不正なURLです。"]}
+      end
+
+      rescue_from Grape::Exceptions::ValidationErrors do
+        rack_response({error: [msg: "不正なリクエストです。"]}.to_json, 400)
       end
 
       mount Resources::V1::Cards
