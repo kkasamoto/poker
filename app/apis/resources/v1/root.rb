@@ -9,7 +9,7 @@ module Resources
         {error: [msg: "不正なURLです。"]}
       end
 
-      rescue_from Grape::Exceptions::ValidationErrors do
+      rescue_from Grape::Exceptions::Base do
         rack_response({error: [msg: "不正なリクエストです。"]}.to_json, 400)
       end
 
