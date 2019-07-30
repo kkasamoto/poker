@@ -7,51 +7,50 @@ describe 'API Request to api/v1/cards', type: :request do
       @headers = {ACCEPT: 'application/json'}
       @mock_service = instance_double(PokerFacadeService)
       allow(PokerFacadeService).to receive(:new).and_return(@mock_service)
-      allow(@mock_service).to receive(:check_strong_card).and_return({result: {card: 'card', hand: 'hand', best:true},
-                                                                      error: {card: 'card_err', msg: 'msg'}})
+      allow(@mock_service).to receive(:check_strong_card).and_return({result: [{card: 'card', hand: 'hand', best:true}],
+                                                                      error: [{card: 'card_err', msg: 'msg'}]})
     end
 
-    describe 'リクエストに対して200 OKを返すこと' do
+    describe 'Serviceから出た結果のerrorの有無に対して、正しいステータスコードを返すこと' do
       it '全てのcardが正しいフォーマットの時' do
-        post '/api/v1/cards/check', {cards: ["S1 S2 S3 S4 S5", "D1 H1 H2 H3 D3"]}, @headers
+        allow(@mock_service).to receive(:check_strong_card).and_return(result: [{card: 'card', hand: 'hand', best:true}],
+                                                                       error: [])
+        post '/api/v1/cards/check', {cards: ["test"]}, @headers
         expect(response.status).to eq 200
       end
 
       it '一部のcardのフォーマットが不正の時' do
-        post '/api/v1/cards/check', {cards: ["S1 S2 S3 4 S5", "D1 H1 H2 H3 D3"]}, @headers
-        expect(response.status).to eq 200
+        post '/api/v1/cards/check', {cards: ["test"]}, @headers
+        expect(response.status).to eq 400
       end
 
       it '全てのcardのフォーマットが不正の時' do
-        post '/api/v1/cards/check', {cards: ["S1 S SS", "1H1 H2 H3 D3"]}, @headers
-        expect(response.status).to eq 200
+        post '/api/v1/cards/check', {cards: ["test"]}, @headers
+        expect(response.status).to eq 400
       end
     end
 
     describe 'リクエストのBodyデータを正しくValidateしていること' do
-      it 'cardsというkeyが存在しない（NG）' do
-        post '/api/v1/cards/check', {not_exist: ["S1 S SS", "1H1 H2 H3 D3"]}, @headers
-        expect(response.status).to eq 400
-      end
+      describe '間違ったBodyデータは通さない' do
+        it 'cardsというkeyが存在しない（NG）' do
+          post '/api/v1/cards/check', {not_exist: ["S1 S SS", "1H1 H2 H3 D3"]}, @headers
+          expect(response.status).to eq 400
+        end
 
-      it 'cardsに対するvalueが配列ではなく、str（NG）' do
-        post '/api/v1/cards/check', {cards: "S1 S SS"}, @headers
-        expect(response.status).to eq 400
-      end
+        it 'cardsに対するvalueが配列ではなく、str（NG）' do
+          post '/api/v1/cards/check', {cards: "S1 S SS"}, @headers
+          expect(response.status).to eq 400
+        end
 
-      it '配列の中身が空（NG）' do
-        post '/api/v1/cards/check', {cards: []}, @headers
-        expect(response.status).to eq 400
-      end
+        it '配列の中身が空（NG）' do
+          post '/api/v1/cards/check', {cards: []}, @headers
+          expect(response.status).to eq 400
+        end
 
-      it '配列に数字が存在（OK）' do
-        post '/api/v1/cards/check', {cards: ["S1 S2", 1]}, @headers
-        expect(response.status).to eq 200
-      end
-
-      it '配列の中身が全て文字列（OK）' do
-        post '/api/v1/cards/check', {cards: ["S1 S2", "s"]}, @headers
-        expect(response.status).to eq 200
+        it '配列に数字が存在（NG）' do
+          post '/api/v1/cards/check', {cards: ["S1 S2", 1]}, @headers
+          expect(response.status).to eq 400
+        end
       end
     end
 
