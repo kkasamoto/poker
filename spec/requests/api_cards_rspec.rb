@@ -11,6 +11,27 @@ describe 'API Request to api/v1/cards', type: :request do
                                                                       error: [{card: 'card_err', msg: 'msg'}]})
     end
 
+    describe 'リクエストurlが不正' do
+      before do
+        @valid_data = {cards: ["S1 S2 S3 S4 S5"]}
+      end
+
+      it 'checkまで足りない' do
+        post '/api/v1/cards/che', @valid_data, @headers
+        expect(response.status).to eq 404
+      end
+
+      it 'checkから多い' do
+        post '/api/v1/cards/check/test', @valid_data, @headers
+        expect(response.status).to eq 404
+      end
+
+      it '親pathから違う' do
+        post '/ap/v/cards/check/test', @valid_data, @headers
+        expect(response.status).to eq 404
+      end
+    end
+
     describe 'Serviceから出た結果のerrorの有無に対して、正しいステータスコードを返すこと' do
       it '全てのcardが正しいフォーマットの時' do
         allow(@mock_service).to receive(:check_strong_card).and_return(result: [{card: 'card', hand: 'hand', best:true}],
