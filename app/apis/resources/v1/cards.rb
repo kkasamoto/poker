@@ -4,7 +4,7 @@ module Resources
       resources :cards do
         desc "check which card is winner"
         params do
-          requires :cards, type: Array[String]
+          requires :cards, type: Array[String], allow_blank: false
         end
         post :check do
           status 200
