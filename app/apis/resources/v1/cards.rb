@@ -7,6 +7,8 @@ module Resources
           requires :cards, type: Array[String]
         end
         post :check do
+          status 200
+
           service = PokerFacadeService.new
           rslt_for_check = service.check_strong_card(params[:cards])
           if rslt_for_check[:result].size != 0
