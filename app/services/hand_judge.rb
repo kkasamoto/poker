@@ -1,4 +1,5 @@
 class HandJudge
+  include HandsDefinition::Hands
   attr_reader :card
   attr_reader :err_messages
 
@@ -44,7 +45,7 @@ class HandJudge
 
   # 役の強さを返す
   def judge_strength
-    HandsDefinition::Hands::STRENGTH.each do |k, v|
+    STRENGTH.each do |k, v|
       if k == judge_name
         return v
       end
