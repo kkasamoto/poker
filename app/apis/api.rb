@@ -1,5 +1,14 @@
 class API < Grape::API
-  prefix 'api'
+  format :json
 
-  mount Resources::V1::Root
+  rescue_from Grape::Exceptions::Base do
+    rack_response({error: [msg: "不正なリクエストです。"]}.to_json, 400)
+  end
+
+  route :any, '*path' do
+    error!({error: [msg: "不正なURLです。"]}, 404)
+  end
+
+  mount Root
 end
+
