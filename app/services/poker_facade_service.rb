@@ -22,12 +22,13 @@ class PokerFacadeService
     end
 
     # 最大の強さを調べて、該当するカードのbestキーにtrueを代入
-    max_strength = result.max {|a, b| a[:strength] <=> b[:strength]}[:strength]
-    result.each do |card_hash|
-      if card_hash[:strength] == max_strength
-        card_hash[:best] = true
+    unless result.empty?
+      max_strength = result.max {|a, b| a[:strength] <=> b[:strength]}[:strength]
+      result.each do |card_hash|
+        if card_hash[:strength] == max_strength
+          card_hash[:best] = true
+        end
       end
-      card_hash.delete(:strength)
     end
     {result: result, error: error}
   end
