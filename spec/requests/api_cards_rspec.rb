@@ -34,6 +34,11 @@ describe 'API Request to api/v1/cards', type: :request do
         expect(response.status).to eq 400
       end
 
+      it 'cardsに対するvalueが配列ではなく、str（NG）' do
+        post '/api/v1/cards/check', {cards: "S1 S SS"}, @headers
+        expect(response.status).to eq 400
+      end
+
       it '配列の中身が空（NG）' do
         post '/api/v1/cards/check', {cards: []}, @headers
         expect(response.status).to eq 400
