@@ -30,7 +30,7 @@ describe 'API Request to api/v1/cards', type: :request do
 
     describe 'リクエストのBodyデータを正しくValidateしていること' do
       it 'cardsというkeyが存在しない（NG）' do
-        post '/api/v1/cards/check', {cars: ["S1 S SS", "1H1 H2 H3 D3"]}, @headers
+        post '/api/v1/cards/check', {not_exist: ["S1 S SS", "1H1 H2 H3 D3"]}, @headers
         expect(response.status).to eq 400
       end
 
