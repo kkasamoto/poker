@@ -10,13 +10,9 @@ module Resources
           status 200
 
           service = PokerFacadeService.new
-          rslt_for_check = service.check_strong_card(params[:cards])
-          if rslt_for_check[:result].size != 0
-            present :result, rslt_for_check[:result], with: Entities::V1::CardEntity
-          end
-          if rslt_for_check[:error].size != 0
-            present :error, rslt_for_check[:error], with: Entities::V1::CardErrorEntity
-          end
+          rslt_check = service.check_strong_card(params[:cards])
+          present :result, rslt_check[:result], with: Entities::V1::CardEntity unless rslt_check[:result].empty?
+          present :error, rslt_check[:error], with: Entities::V1::CardErrorEntity unless rslt_check[:error].empty?
         end
       end
     end
