@@ -12,5 +12,6 @@ module Poker
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.paths.add 'app/services/hand', eager_load: true
+    config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb'), eager_load: true
   end
 end
