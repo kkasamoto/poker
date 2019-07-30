@@ -73,6 +73,13 @@ describe 'API Request to api/v1/cards', type: :request do
           expect(response.status).to eq 400
         end
       end
+
+      it '正しいBodyデータは通す' do
+        allow(@mock_service).to receive(:check_strong_card).and_return(result: [{card: 'card', hand: 'hand', best:true}],
+                                                                       error: [])
+        post '/api/v1/cards/check', {cards: ["S1 S2 S3 S4 S5"]}, @headers
+        expect(response.status).to eq 200
+      end
     end
 
     describe 'Serviceからの結果を正しく整形すること' do
