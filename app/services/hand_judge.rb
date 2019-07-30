@@ -27,7 +27,7 @@ class HandJudge
     end
     #2.
     @card.each_with_index  do |c,idx|
-      if not c.match(/^[SHDC]([1-9]|10|11|12|13)$/)
+      unless c.match(/^[SHDC]([1-9]|10|11|12|13)$/)
         @err_messages.append("#{idx+1}番目のカード指定文字が不正です。（#{c}）")
       end
     end
