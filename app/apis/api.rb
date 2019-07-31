@@ -1,7 +1,9 @@
 class API < Grape::API
+  include Grape::Exceptions
+
   format :json
 
-  rescue_from Grape::Exceptions::Base do
+  rescue_from InvalidMessageBody, ValidationErrors do
     rack_response({error: [msg: "不正なリクエストです。"]}.to_json, 400)
   end
 
