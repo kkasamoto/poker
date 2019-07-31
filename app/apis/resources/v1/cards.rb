@@ -4,11 +4,9 @@ module Resources
       resources :cards do
 
         helpers do
-          def valid_array_elements(array)
+          def raise_for_invalid_element(array)
             array.each do |a|
-              unless a.instance_of?(String)
-                raise Grape::Exceptions::ValidationErrors
-              end
+              raise Grape::Exceptions::ValidationErrors unless a.instance_of?(String)
             end
           end
         end
@@ -18,7 +16,7 @@ module Resources
           requires :cards, type: Array, allow_blank: false, coerce_with: ->(val) { val }
         end
         post :check do
-          valid_array_elements(params[:cards])
+          raise_for_invalid_element(params[:cards])
 
           service = PokerFacadeService.new
           rslt_check = service.check_strong_card(params[:cards])
