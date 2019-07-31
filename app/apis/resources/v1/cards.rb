@@ -13,7 +13,7 @@ module Resources
 
         desc "check which card is winner"
         params do
-          requires :cards, type: Array, allow_blank: false, coerce_with: ->(val) { val }
+          requires :cards, type: Array, allow_blank: false
         end
         post :check do
           raise_for_invalid_element(params[:cards])
