@@ -67,6 +67,16 @@ describe 'API Request to api/v1/cards', type: :request do
           post '/api/v1/cards/check', {cards: []}, @headers
           expect(response.status).to eq 400
         end
+
+        it '配列に数字が存在（NG）' do
+          post '/api/v1/cards/check', {cards: ["S1 S2", 1]}, @headers
+          expect(response.status).to eq 400
+        end
+
+        it 'cardsのvalueが配列ではなく、文字列' do
+          post '/api/v1/cards/check', {cards: "String"}, @headers
+          expect(response.status).to eq 400
+        end
       end
 
       it '正しいBodyデータは通す' do
