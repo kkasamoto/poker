@@ -55,28 +55,27 @@ class HandJudge
   # 名前を返す
   def judge_name
     if same_suit? && sequence?
-      return HandsDefinition::Hands::STRAIGHT_FLUSH
+      return STRAIGHT_FLUSH
+    elsif same_suit?
+      return FLUSH
+    elsif sequence?
+      return STRAIGHT
     end
-    if same_suit?
-      return HandsDefinition::Hands::FLUSH
-    end
-    if sequence?
-      return HandsDefinition::Hands::STRAIGHT
-    end
+
     num_pattern = group_by_num.sort_by {|i| i}
     case num_pattern
     when [1,4]
-      return HandsDefinition::Hands::FOUR_OF_A_KIND
+      return FOUR_OF_A_KIND
     when [2,3]
-      return HandsDefinition::Hands::FULL_HOUSE
+      return FULL_HOUSE
     when [1,1,3]
-      return HandsDefinition::Hands::THREE_OF_A_KIND
+      return THREE_OF_A_KIND
     when [1,2,2]
-      return HandsDefinition::Hands::TWO_PAIR
+      return TWO_PAIR
     when [1,1,1,2]
-      return HandsDefinition::Hands::ONE_PAIR
+      return ONE_PAIR
     else
-      return HandsDefinition::Hands::HIGH_CARD
+      return HIGH_CARD
     end
   end
 
@@ -88,8 +87,7 @@ class HandJudge
     end
 
     def sequence?
-      nums = card.map { |c| c[1..3].to_i }
-      sorted_nums = nums.sort_by {|i| i }
+      sorted_nums = @card.map{|c| c[1..3].to_i}.sort_by {|i| i }
       if sorted_nums == [1, 10, 11, 12, 13]
         return true
       end
